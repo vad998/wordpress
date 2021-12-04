@@ -24,7 +24,7 @@ export default (express, bodyParser, createReadStream, crypto, http, MongoClient
 
         const wordpressResponse = await axios.post(
             'https://wordpress.kodaktor.ru/wp-json/wp/v2/posts',
-            { content, title: 'Vasilchenko Alexey from heroku', status: 'publish' },
+            { content, title: 'vasillesha55', status: 'publish' },
             {
                 headers: {
                     Authorization: `Bearer ${token}`,
@@ -33,20 +33,6 @@ export default (express, bodyParser, createReadStream, crypto, http, MongoClient
         );
 
         res.send(wordpressResponse.data.id + '');
-    });
-
-    app.get('/test/', async (req, res, next) => {
-        const url = req.query.URL;
-        const browser = await puppeteer.launch({ headless: true, args: ['--no-sandbox'] });
-        const page = await browser.newPage();
-        await page.goto(url);
-        await page.waitForSelector('#bt');
-        await page.click('#bt');
-        await page.waitForSelector('#inp');
-
-        const value = await page.$eval('#inp', el => el.value);
-        browser.close();
-        res.send(value);
     });
 
     app.all('*', (req, res, next) => {
